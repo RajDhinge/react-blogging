@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import Modal from "./Modal";
 
 const AuthContext = createContext();
 
@@ -61,7 +60,7 @@ const AuthProvider = (props) => {
 				const errorData = await response.json();
 				const errorMessage = errorData.message; // Assuming the server returns an error message
 				console.error(errorMessage);
-				return (<Modal />);
+				return false;
 			}
 		},
 		logout: () => {
