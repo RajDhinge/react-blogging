@@ -4,7 +4,7 @@ import Login from './components/Login';
 
 function App() {
 	const auth = useAuth();
-	console.log(auth.isAuthenticated);
+	console.log(auth);
 	return (
 		<>
 			<Login />

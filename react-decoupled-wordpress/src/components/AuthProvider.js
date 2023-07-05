@@ -8,9 +8,11 @@ export function useAuth() {
 
 const AuthProvider = (props) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [token, setToken] = useState(false);
 
 	const auth = {
 		isAuthenticated,
+		token,
 		fetchData: async (url) => {
 			const token = localStorage.getItem('token');
 			if (!token) {
@@ -50,10 +52,11 @@ const AuthProvider = (props) => {
 			console.log(response);
 			if (response.ok) {
 				const data = await response.json();
-				const token = data.token; // Assuming the server returns the JWT in a 'token' field
+				const curr_token = data.token; // Assuming the server returns the JWT in a 'token' field
 				// Store the token in localStorage or a cookie for future requests
-				localStorage.setItem('token', token);
-				console.log(token);
+				localStorage.setItem('token', curr_token);
+				console.log(curr_token);
+				setToken(curr_token);
 				setIsAuthenticated(true);
 			} else {
 				// Handle authentication error
