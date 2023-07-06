@@ -7,7 +7,7 @@ import Navbar from './components/Navbar';
 import Toast from './components/UI/Toast';
 import useInternetStatus from './components/custom-hooks/useInternetStatus';
 import useApiStatus from './components/custom-hooks/useApiStatus';
-import { BASE_URL } from './components/constants';
+import { BASE_URL, TINY_MCE_KEY } from './components/constants';
 
 function App() {
 	const editorRef = useRef(null);
@@ -30,9 +30,11 @@ function App() {
 	useEffect(() => {
 		if (apiStatus) {
 			console.log("Host is up");
-		} else {
-			console.log("Host is down")
 		}
+
+		return (() => {
+			console.log("Calling Cleanup");
+		});
 	}, [apiStatus, internet]);
 
 	useEffect(() => {
@@ -56,20 +58,17 @@ function App() {
 							<input placeholder="Title" type="text" id="default-input" className="bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 						</div>
 						<Editor
+							apiKey={TINY_MCE_KEY}
 							onInit={(evt, editor) => editorRef.current = editor}
 							initialValue=""
 							init={{
 								height: 500,
 								menubar: false,
-								plugins: [
-									'advlist autolink lists link image charmap print preview anchor',
-									'searchreplace visualblocks code fullscreen',
-									'insertdatetime media table paste code help wordcount'
-								],
+								plugins: ["image", "code", "table", "link", "media", "codesample"],
 								toolbar: 'undo redo | formatselect | ' +
 									'bold italic backcolor | alignleft aligncenter ' +
 									'alignright alignjustify | bullist numlist outdent indent | ' +
-									'removeformat | help',
+									'image code table link media codesample ' + 'removeformat | help',
 								content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
 							}}
 						/>
