@@ -16,13 +16,6 @@ const AuthProvider = (props) => {
 		token: token,
 		fetchData: async (url, method = 'GET', body = '') => {
 
-
-			console.log(url);
-			console.log(method);
-			console.log(body);
-			console.log(auth.token);
-			console.log(auth.isAuthenticated);
-
 			const token = localStorage.getItem('token');
 
 			if (!token) {
@@ -30,11 +23,7 @@ const AuthProvider = (props) => {
 				return;
 			}
 
-
-
-			console.log("1");
 			try {
-				console.log("Processing the data upload");
 				const response = await fetch(url, {
 					method: method,
 					headers: {
@@ -69,13 +58,11 @@ const AuthProvider = (props) => {
 					},
 					body: JSON.stringify({ username, password })
 				});
-				console.log(response);
 				if (response.ok) {
 					const data = await response.json();
 					const curr_token = data.token; // Assuming the server returns the JWT in a 'token' field
 					// Store the token in localStorage or a cookie for future requests
 					localStorage.setItem('token', curr_token);
-					console.log(curr_token);
 					setToken(curr_token);
 					setIsAuthenticated(true);
 				} else {
@@ -99,7 +86,6 @@ const AuthProvider = (props) => {
 	useEffect(
 		() => {
 			if (localStorage.getItem('token')) {
-				console.log(localStorage.getItem('token'));
 				setToken(localStorage.getItem('token'));
 				setIsAuthenticated(true);
 			}
